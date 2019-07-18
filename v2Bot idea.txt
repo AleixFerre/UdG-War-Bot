@@ -1,0 +1,127 @@
+FASE DE PREPARACIÓ
+
+- Tots els integrants requerirant d'una conta de Twitter
+- A un pots hauran de respondre amb l'item que volen escollir
+- Cada item tindrà diferents estats. Sempre hi haurà un item per cadascu
+- El que sigui mes ràpid podrà escollir el millor.
+
+--------------------------------------
+
+OBJECTES
+
+- ESPASA
+- ESCUT
+- AK-47
+- BAZOOKA
+- RIGAU
+- EDA
+- BOTES DE MOVILITAT
+- PuTTY
+- AULARI COMÚ
+- PC CON WIN XP
+- PC GAMING
+- LLAVE
+- (...)
+
+
+--------------------------------------
+
+FASE DE COMBAT
+
+- Cada ronda:
+	- S'escolleixen dos integrants vius
+	- Es comparen els stats de cadascu
+	- Si un té millors stats que l'altre, mata a l'altre quedant-se amb l'objecte.
+
+- Rondes especials
+
+	- RONDA D'INTERACCIONS
+		- La primera persona que dóni LIKE s'emporta un objecte.
+		- La persona que hagi donat més likes a posts del bot, s'emporta un objecte.
+		- La persona que hagi donat més retwits a posts del bot, s'emporta un objecte.
+		- La persona que hagi respòs més a posts del bot, s'emporta un objecte.
+		
+	- RONDA DE OBJECTES
+		- S'escolleix un jugador aleatori
+		- Se li activa l'objecte que té.
+		- Només pot portar un objecte cadascun. 
+		- Si el jugador no té cap objecte, es torna a buscar.
+		- Si cap jugador té objectes, es fa una ronda estàndard.
+
+--------------------------------------
+
+MILLORES RESPECTE A LA VERSIÓ ANTERIOR
+
+- Cada persona tindrà una frase personalitzada de matar i morir.
+- Fons més currat, no vull un degradat to cutre
+- Objecte en cada persona.
+- Dies en els que passa cada ronda.
+
+--------------------------------------
+
+POSSIBLES FRASES
+
+- user + " se ha tropezado con su gracia. Sigue vivo porque no tiene."
+- user + " se ha tropezado con su pié en las escaleras de la P2 y se ha llevado a X personas por delante."
+- user + " A este me lo cargo por tonto."
+- user + " se ha suicidado."
+- user + " está en racha de " + user.racha + "!"
+
+FRASES RELATIVES A L'OBJECTE
+
+- ESPASA
+	- BONA: ""
+	- DOLENTA: ""
+	
+- ESCUT
+	- BONA: ""
+	- DOLENTA: ""
+	
+- AK-47
+	- BONA: ""
+	- DOLENTA: ""
+	
+- BAZOOKA
+	- BONA: ""
+	- DOLENTA: ""
+	
+- RIGAU
+	- BONA: ""
+	- DOLENTA: ""
+	
+- EDA
+	- BONA: ""
+	- DOLENTA: user + " ha suspendido EDA."
+	
+- BOTES DE MOVILITAT
+	- BONA: ""
+	- DOLENTA: ""
+	
+- PuTTY
+	- BONA: ""
+	- DOLENTA: ""
+	
+- AULARI COMÚ
+	- BONA: ""
+	- DOLENTA: ""
+	
+- PC CON WIN XP
+	- BONA: ""
+	- DOLENTA: ""
+	
+- PC GAMING
+	- BONA: ""
+	- DOLENTA: ""
+	
+- LLAVE
+	- BONA: "Felicidades acabas de coger la llave que ." 
+	- DOLENTA: "Felicidades acabas de coger la llave que te abre la puerta para irte a la mierda! Ale, por tonto, muerto." 
+
+- (...)
+
+
+
+
+
+
+
