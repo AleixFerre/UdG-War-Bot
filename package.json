@@ -1,0 +1,22 @@
+{
+  "name": "npm_demo",
+  "version": "2.0.0",
+  "description": "Developing the second version of the Twitter UdG Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Bot",
+    "Twitter",
+    "v2",
+    "Battle Royale",
+    "UdG"
+  ],
+  "author": "Aleix Ferre Juan",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^2.2.11"
+  }
+}
