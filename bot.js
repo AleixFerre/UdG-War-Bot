@@ -79,7 +79,7 @@ var frases_doble_baixa = [
     "* ha deixat les practiques a + i =, cosa que els ha donat sida.",
     "* s'ha marcat un dos por uno matant a + i a =",
     "* ha destrossat l'ano de + i = mentre feien un threesome",
-    "Tinc polla per a tots, a * per davant i a B per darrera",
+    "* diu: Tinc polla per a tots, a + per davant i a = per darrera",
     "* ha posat fi a la vida de + i =",
     "* ha trobat un exploit al backend d'aquest bot, i ha esborrat a + i = de la llista de vius.",
     "* ha sacrificat a un ritual satànic a + i a =",
