@@ -1,4 +1,4 @@
-// Keys Bot v2
+// Keys Bot 
 
 module.exports = {
     consumer_key:         '...',

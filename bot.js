@@ -6,6 +6,9 @@ GitHub: https://github.com/CatalaHD/Bot-Twitter-v2
 USING
 Twit: https://github.com/ttezel/twit
 
+Following the Twitter Bot Tutorial by TheCodingTrain
+Tutorial Series: https://www.youtube.com/playlist?list=PLRqwX-V7Uu6atTSxoRiVnSuOn6JHnq2yV
+
 Hosted in AWS EC2
 
 */
@@ -47,7 +50,6 @@ var frases_mort = [
     "* ha enviat a + cap a la Lobby",
     "* ha sacrificat a + als deus obscurs amb una bomba atomica"
 ];
-
 
 var frases_suicidi = [
     "* ha matat a *, perquè s'ha suicidat, ho pilles? jjajaj xD",
@@ -98,27 +100,27 @@ var frases_doble_baixa = [
 // Llista que mantindrà a tots els jugadors vius de la partida
 
 var llistaVius = [
-    { nom: "Blascovitz",                    alias: "( @en_sharp ) ",        baixes: 0 },
-    { nom: "Laura Qwerty",                  alias: "( @LauraQwerty_ ) ",    baixes: 0 },
-    { nom: "Alex V.",                       alias: "( @JainkoAteoa ) ",     baixes: 0 },
-    { nom: "Aureoloss - El Meme Master",    alias: "( @ovonesix ) ",        baixes: 0 },
-    { nom: "EnormousBlackDildo",            alias: "( @Rigoberto_III ) ",   baixes: 0 },
-    { nom: "Sandro Bortolotti",             alias: "",                      baixes: 0 },
-    { nom: "Quasar",                        alias: "( @qsr711 ) ",          baixes: 0 },
-    { nom: "Big oof",                       alias: "( @ThunderUsed ) ",     baixes: 0 },
-    { nom: "Satán",                         alias: "( @seitnist ) ",        baixes: 0 },
-    { nom: "ArrozArea51",                   alias: "( @zRoz14 ) ",          baixes: 0 },
-    { nom: "Català AltaDefinició",          alias: "( @CatalaHD ) ",        baixes: 0 },
-    { nom: "Carla",                         alias: "( @maya8carla ) ",      baixes: 0 },
-    { nom: "AlienFumeta",                   alias: "",                      baixes: 0 },
-    { nom: "Arnau Marquez",                 alias: "",                      baixes: 0 },
-    { nom: "Tomasz SzGu",                   alias: "( @TomaszSzeliga ) ",   baixes: 0 },
-    { nom: "Joel AKA Chavalada",            alias: "( @Jowi_99 ) ",         baixes: 0 },
-    { nom: "TitoVizonte",                   alias: "( @Tito_Vizonte ) ",    baixes: 0 },
-    { nom: "Pugdemon el pelucas",           alias: "( @_rxbxn ) ",          baixes: 0 },
-    { nom: "Santi",                         alias: "( @SantiVG_99 ) ",      baixes: 0 },
-    { nom: "Jack el Destripador",           alias: "( @JackArcanMiller ) ", baixes: 0 },
-    { nom: "Anabel",                        alias: "( @OnlyDreamAgain ) ",  baixes: 0 }
+    { nom: "Blascovitz",                    alias: "( @en_sharp ) ",            baixes: 0 },
+    { nom: "Laura Qwerty",                  alias: "( @LauraQwerty_ ) ",        baixes: 0 },
+    { nom: "Alex V.",                       alias: "( @JainkoAteoa ) ",         baixes: 0 },
+    { nom: "Aureoloss - El Meme Master",    alias: "( @ovonesix ) ",            baixes: 0 },
+    { nom: "EnormousBlackDildo",            alias: "( @Rigoberto_III ) ",       baixes: 0 },
+    { nom: "Sandro Bortolotti",             alias: "",                          baixes: 0 },
+    { nom: "Quasar",                        alias: "( @qsr711 ) ",              baixes: 0 },
+    { nom: "Big oof",                       alias: "( @ThunderUsed ) ",         baixes: 0 },
+    { nom: "Satán",                         alias: "( @seitnist ) ",            baixes: 0 },
+    { nom: "ArrozArea51",                   alias: "( @zRoz14 ) ",              baixes: 0 },
+    { nom: "Català AltaDefinició",          alias: "( @CatalaHD ) ",            baixes: 0 },
+    { nom: "Carla",                         alias: "( @maya8carla ) ",          baixes: 0 },
+    { nom: "AlienFumeta",                   alias: "",                          baixes: 0 },
+    { nom: "Arnau Marquez",                 alias: "",                          baixes: 0 },
+    { nom: "Tomasz SzGu",                   alias: "( @TomaszSzeliga ) ",       baixes: 0 },
+    { nom: "Joel AKA Chavalada",            alias: "( @Jowi_99 ) ",             baixes: 0 },
+    { nom: "TitoVizonte",                   alias: "( @Tito_Vizonte ) ",        baixes: 0 },
+    { nom: "Pugdemon el pelucas",           alias: "( @_rxbxn ) ",              baixes: 0 },
+    { nom: "Santi",                         alias: "( @SantiVG_99 ) ",          baixes: 0 },
+    { nom: "Jack el Destripador",           alias: "( @JackArcanMiller ) ",     baixes: 0 },
+    { nom: "Anabel",                        alias: "( @OnlyDreamAgain ) ",      baixes: 0 }
  ];
 
 var midaInici = llistaVius.length;
@@ -129,9 +131,9 @@ var llistaMorts = [];
 // Contingut del Twit que s'ha de publicar
 // Aquest es va modificant dinàmicament al programa
 var hashtag = "#UdGBattleRoyale2";
-var content = "LA GUERRA HA COMENÇAT\nEs pulicarà cada 6h\nEl primer twit es farà efectiu a les 4 PM";
+var content = "";
 
-var frequencia_twits = 4; // Twits al dia
+var frequencia_twits = 4; // Quantitat de Twits que s'han de pujar cada dia
 var frequencia_especials = 4; // Cada quants twits sortirà una ronda especial
 
 var nTwits = 0;
@@ -139,13 +141,16 @@ var nTwits = 0;
 // ----------------------------------------------------------------
 // Main Program
 
-
+// Fem el primer torn en quant el bot comenci
 ferTorn();
 
+// I cridem al setInterval perque cada x hores torni a fer un torn
 var intervalID = setInterval(ferTorn, 1000*60*60*24/frequencia_twits);
 
 
-// ------------------- Functions -------------------
+// ----------------------------------------------------------------
+// Functions
+
 function ferTorn() {
 
     if (nTwits%frequencia_especials === 0 && llistaVius.length > 5 && nTwits != 0) {
@@ -221,6 +226,9 @@ function matar() {
     var assasi = llistaVius[posicioAssasi];
     var mort = llistaVius[posicioMort];
     
+
+    // Frase personalitzada
+
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
     var frase = frases_mort[posicioFrase];
 
@@ -253,6 +261,9 @@ function suicidar() {
 
     suicidat = llistaVius[suicidat_pos];
 
+
+    // Frase personalitzada
+
     var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
     var frase = frases_suicidi[posicioFrase];
 
@@ -260,8 +271,6 @@ function suicidar() {
     frase = frase.replace("*", suicidat.nom);
 
     content += frase;
-
-    // content += suicidat.nom + " " + suicidat.alias + "s'ha suicidat";
 
     llistaMorts.push(suicidat);
     llistaVius.splice(suicidat_pos, 1);
@@ -290,6 +299,9 @@ function doble_kill() {
     var nomAssasi = llistaVius[assasi].nom;
     var nom1 = llistaVius[mort1].nom;
     var nom2 = llistaVius[mort2].nom;
+
+
+    // Frase personalitzada
 
     var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
     var frase = frases_doble_baixa[posicioFrase];
@@ -370,6 +382,9 @@ function resucitar() {
    
 
 function montarFitxer() {
+
+    // Montem el fitxer .csv perque Processing el tingui llest per crear les imatges
+
     if ( llistaVius.length > 1 ) {
         content += "\n" + llistaVius.length + " vius, " + llistaMorts.length + " morts.";
     }
@@ -402,17 +417,16 @@ function montarFitxer() {
         
         // Fem servir Processing per crear la imatge i la pengem a Twitter
         
-        // console.log(dia_actual() + "\n" + content + "\n" + hashtag + "\n");
         tweetIt();
-
     }
-
 }
 
 
 function tweetIt() {
     
-    // Creem una comanda de Processing-java per executar directament l'script
+    // Creem una comanda per executar directament l'script ALIVE
+    // En aquest cas, executarem el programa compilat, ja que estem treballant a Linux
+    // i ens és més fàcil.
     
     console.log("Starting processing ALIVE");
     var cmd = './image/alive/image_alive';
@@ -420,7 +434,7 @@ function tweetIt() {
     
     function processing_alive(error, stdout, err) {
         
-        // Quan ja s'ha creat la imatge ALIVE i no hi ha hagut cap error, la pujem a Twitter
+        // Quan ja s'ha creat la imatge ALIVE i no hi ha hagut cap error, començem a processar la segona
 
         if (error !== null) {
             console.log(error);
@@ -430,7 +444,7 @@ function tweetIt() {
 
         
 
-        // Creem una comanda de Processing-java per executar directament l'script però ara DEATH
+        // Creem una comanda per executar directament l'script però ara DEATH
 
         console.log("Starting processing DEATH");
         var cmd = './image/death/image_death';
@@ -443,6 +457,7 @@ function tweetIt() {
     
             console.log("Processing DEATH done!\nReading the img contents...");
 
+            // Llegim el contingut de les dues imatges, ja processades, per pujar-les finalment
 
             var alive_filename = './image/alive/output_alive.png';
             var alive_params = {
