@@ -61,7 +61,7 @@ All this links explained me all the basic fundamentals of this Bot.
 **Free Software made by Aleix Ferré**
 
 
-   [dill]: <https://github.com/CatalaHD>
+   [dill]: <https://github.com/CatalaHD/Bot-Twitter-v2>
    [Processing]: <https://processing.org/download/>
    [Git]: <https://git-scm.com/downloads>
    [node.js]: <http://nodejs.org>
