@@ -310,7 +310,7 @@ function doble_kill() {
     frase = frase.replace("+", nom1);
     frase = frase.replace("=", nom2);
 
-    content += frase;
+    content += frase; 
 
     llistaVius[assasi].baixes += 2;
     
