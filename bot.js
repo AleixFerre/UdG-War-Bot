@@ -312,8 +312,6 @@ function doble_kill() {
 
     content += frase;
 
-    // content += llistaVius[assasi].nom + " ha matat a 2 persones! " + nom1 + " i " + nom2;
-
     llistaVius[assasi].baixes += 2;
     
     var cp_mort1 = llistaVius[mort1];
