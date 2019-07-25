@@ -15,7 +15,7 @@ void setup() {
 
   textSize(40);
 
-  outlineText("MORTS", 1290/2-25, 50, true);
+  outlineText("MORTS", width/2-25, 50, true);
 
   translate(35, 80);
 

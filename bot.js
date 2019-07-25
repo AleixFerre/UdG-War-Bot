@@ -451,6 +451,7 @@ function montarFitxer() {
         // Fem servir Processing per crear la imatge i la pengem a Twitter
 
         tweetIt();
+        
     }
 }
 

@@ -12,7 +12,7 @@ void setup() {
   Table table = loadTable("../data.csv", "header");
 
   textSize(40);
-  outlineText("VIUS", 1290/2-25, 50, true);
+  outlineText("VIUS", width/2-25, 50, true);
 
   translate(35, 80);
 
