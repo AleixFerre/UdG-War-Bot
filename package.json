@@ -17,6 +17,7 @@
   "author": "Aleix Ferre Juan",
   "license": "ISC",
   "dependencies": {
+    "convert-csv-to-json": "0.0.15",
     "twit": "^2.2.11"
   }
 }
