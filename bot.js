@@ -45,10 +45,15 @@ var frases_mort = [
     "* ha matat a + amb una cullera de plastic després de 10 hores...",
     "* ha matat a + i aquest contesta: Cuando nos veamos, uno pa uno y te salto los empastes.",
     "* ha penetrat amb un consolador a + fins la mort",
-    "* ha fet veure una marató de One Piece a + \n\nHa mort de deshidratació",
+    "* ha fet veure una marató de One Piece a +\nHa mort de deshidratació",
     "* ha empalat a + amb un arma secreta",
     "* ha enviat a + cap a la Lobby",
-    "* ha sacrificat a + als deus obscurs amb una bomba atomica"
+    "* ha sacrificat a + als deus obscurs amb una bomba atomica",
+    "* s'ha follat a + sense condó i aquest ha pillat el sida i s'ha mort.",
+    "+ ha tret paper contra les tisores de * i és decapitat",
+    "* ha mort a besitos a +",
+    "* ha apuntat a + a la seva Death Note (sí, en té una perquè pot)",
+    "* diu a + \nTe di la opción de reprogramar tu lenguaje o morir, elegiste no decir Arriba España, bueno no te preocupes en la muerte no existe el 155",
 ];
 
 var frases_suicidi = [
@@ -72,7 +77,12 @@ var frases_suicidi = [
     "* s'ha ofegat amb la seva pròpia saliva",
     "* s'ha mort de desesperació esperant que s'obrís el 3DS MAX",
     "* s'ha suicidat dient Jo soc Ironman \nNo serà recordat",
-    "* s'ha suïcidat al P2 perquè s'ha estresat amb Disseny Conceptual"
+    "* s'ha suïcidat al P2 perquè s'ha estresat amb Disseny Conceptual",
+    "* s'ha immolat contra un grup de vianants",
+    "* ha mort ennuegat amb la seva saliva",
+    "* no suporta matar companys. S'ha sacrificat",
+    "* s'ha matat llançant-se pel pont de l'Onyar",
+    "* perquè t'has mort? Només t'he preguntat si entenies el final d'Evangelion",
 ];
 
 var frases_doble_baixa = [
@@ -95,33 +105,43 @@ var frases_doble_baixa = [
     "* ha matat a + i a = \nDany en àrea",
     "* no en tenia prou amb + i ha matat també a =",
     "* ha fet justicia matant a + i =",
+    "* ha abortat i ha acabat amb la vida dels seus futurs fills + i =",
+    "+ i =, han mort contra la forta i ferma espasa de *",
+    "* ha estornudat i ha fet caure a + i = d'un penya-segat",
+    "* ha assassinat a + y = porque + le habia robado su gran amor, =",
+    "* es volia matar llançant-se des del pont de l'Onyar, però ha caigut a sobre de + i = i els ha matat",
 ];
 
 // Llista que mantindrà a tots els jugadors vius de la partida
 
 var llistaVius = [
-    { nom: "Blascovitz",                    alias: "( @en_sharp ) ",            baixes: 0 },
-    { nom: "Laura Qwerty",                  alias: "( @LauraQwerty_ ) ",        baixes: 0 },
-    { nom: "Alex V.",                       alias: "( @JainkoAteoa ) ",         baixes: 0 },
-    { nom: "Aureoloss - El Meme Master",    alias: "( @ovonesix ) ",            baixes: 0 },
-    { nom: "EnormousBlackDildo",            alias: "( @Rigoberto_III ) ",       baixes: 0 },
-    { nom: "Sandro Bortolotti",             alias: "",                          baixes: 0 },
-    { nom: "Quasar",                        alias: "( @qsr711 ) ",              baixes: 0 },
-    { nom: "Big oof",                       alias: "( @ThunderUsed ) ",         baixes: 0 },
-    { nom: "Satán",                         alias: "( @seitnist ) ",            baixes: 0 },
-    { nom: "ArrozArea51",                   alias: "( @zRoz14 ) ",              baixes: 0 },
-    { nom: "Català AltaDefinició",          alias: "( @CatalaHD ) ",            baixes: 0 },
-    { nom: "Carla",                         alias: "( @maya8carla ) ",          baixes: 0 },
-    { nom: "AlienFumeta",                   alias: "",                          baixes: 0 },
-    { nom: "Arnau Marquez",                 alias: "",                          baixes: 0 },
-    { nom: "Tomasz SzGu",                   alias: "( @TomaszSzeliga ) ",       baixes: 0 },
-    { nom: "Joel AKA Chavalada",            alias: "( @Jowi_99 ) ",             baixes: 0 },
-    { nom: "TitoVizonte",                   alias: "( @Tito_Vizonte ) ",        baixes: 0 },
-    { nom: "Pugdemon el pelucas",           alias: "( @_rxbxn ) ",              baixes: 0 },
-    { nom: "Santi",                         alias: "( @SantiVG_99 ) ",          baixes: 0 },
-    { nom: "Jack el Destripador",           alias: "( @JackArcanMiller ) ",     baixes: 0 },
-    { nom: "Anabel",                        alias: "( @OnlyDreamAgain ) ",      baixes: 0 }
- ];
+    { nom: "Blascovitz",                    alias: " ( @en_sharp )",                baixes: 0 },
+    { nom: "Laura Qwerty",                  alias: " ( @LauraQwerty_ )",            baixes: 0 },
+    { nom: "Alex V.",                       alias: " ( @JainkoAteoa )",             baixes: 0 },
+    { nom: "Aureoloss - El Meme Master",    alias: " ( @ovonesix )",                baixes: 0 },
+    { nom: "EnormousBlackDildo",            alias: " ( @Rigoberto_III )",           baixes: 0 },
+    { nom: "Sandro Bortolotti",             alias: "",                              baixes: 0 },
+    { nom: "Quasar",                        alias: " ( @qsr711 )",                  baixes: 0 },
+    { nom: "Big oof",                       alias: " ( @ThunderUsed )",             baixes: 0 },
+    { nom: "Satán",                         alias: " ( @seitnist )",                baixes: 0 },
+    { nom: "ArrozArea51",                   alias: " ( @zRoz14 )",                  baixes: 0 },
+    { nom: "Català AltaDefinició",          alias: " ( @CatalaHD )",                baixes: 0 },
+    { nom: "Carla",                         alias: " ( @maya8carla )",              baixes: 0 },
+    { nom: "AlienFumeta",                   alias: "",                              baixes: 0 },
+    { nom: "Arnau Marquez",                 alias: "",                              baixes: 0 },
+    { nom: "Tomasz SzGu",                   alias: " ( @TomaszSzeliga )",           baixes: 0 },
+    { nom: "Joel AKA Chavalada",            alias: " ( @Jowi_99 )",                 baixes: 0 },
+    { nom: "TitoVizonte",                   alias: " ( @Tito_Vizonte )",            baixes: 0 },
+    { nom: "Pugdemon el pelucas",           alias: " ( @_rxbxn )",                  baixes: 0 },
+    { nom: "Santi",                         alias: " ( @SantiVG_99 )",              baixes: 0 },
+    { nom: "Jack el Destripador",           alias: " ( @JackArcanMiller )",         baixes: 0 },
+    { nom: "Anabel",                        alias: " ( @OnlyDreamAgain )",          baixes: 0 },
+    { nom: "Elamores Picotres <3",          alias: "",                              baixes: 0 },
+    { nom: "Rigau III - El Coix",           alias: "",                              baixes: 0 },
+    { nom: "Gemma",                         alias: " ( @magicbllet )",              baixes: 0 },
+    { nom: "MrNobody",                      alias: " ( @NoEnTincPeroEmFeiaIlu )",   baixes: 0 },
+    { nom: "AllCatAreAragoneses",           alias: "",                              baixes: 0 },
+];
 
 var midaInici = llistaVius.length;
 
@@ -232,8 +252,7 @@ function matar() {
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
     var frase = frases_mort[posicioFrase];
 
-    frase = frase.replace("*", assasi.nom);
-    frase = frase.replace("+", mort.nom);
+    frase = frase.replace("*", assasi.nom + assasi.alias).replace("+", mort.nom + mort.alias);
     
     content = frase;
     
@@ -255,25 +274,29 @@ function matar() {
 
 
 function suicidar() {
-    content += "SUICIDI\n";
 
-    var suicidat_pos = Math.floor(Math.random() * llistaVius.length);
+    if (llistaVius.length < 2) {
+        rondaEspecial();
+    } else {
+        content += "SUICIDI\n";
 
-    suicidat = llistaVius[suicidat_pos];
+        var suicidat_pos = Math.floor(Math.random() * llistaVius.length);
 
+        suicidat = llistaVius[suicidat_pos];
 
-    // Frase personalitzada
+        
+        // Frase personalitzada
+        
+        var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
+        var frase = frases_suicidi[posicioFrase];
+        
+        frase = frase.replace("*", suicidat.nom + suicidat.alias).replace("*", suicidat.nom);
 
-    var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
-    var frase = frases_suicidi[posicioFrase];
+        content += frase;
 
-    frase = frase.replace("*", suicidat.nom);
-    frase = frase.replace("*", suicidat.nom);
-
-    content += frase;
-
-    llistaMorts.push(suicidat);
-    llistaVius.splice(suicidat_pos, 1);
+        llistaMorts.push(suicidat);
+        llistaVius.splice(suicidat_pos, 1);
+    }
 }
 
 
@@ -281,52 +304,55 @@ function doble_kill() {
     // Quan s'executa la redencion, 2 persones que estaven mortes, reviuen
     if (llistaMorts.length < 2) {
         rondaEspecial();
+    } else {        
+        content += "DOBLE KILL\n";
+
+        var mort1 = Math.floor( Math.random() * llistaVius.length );
+        var mort2 = Math.floor( Math.random() * llistaVius.length );
+        var assasi = Math.floor( Math.random() * llistaVius.length );
+
+
+        while (mort1 === mort2 || mort1 === assasi || mort2 === assasi) {
+            mort1 = Math.floor( Math.random() * llistaVius.length );
+            mort2 = Math.floor( Math.random() * llistaVius.length );
+            assasi = Math.floor( Math.random() * llistaVius.length );
+        }
+
+        var _assasi = llistaVius[assasi];
+        var _mort1 = llistaVius[mort1];
+        var _mort2 = llistaVius[mort2];
+
+        
+        // Frase personalitzada
+        
+        var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
+        var frase = frases_doble_baixa[posicioFrase];
+        
+        // El replace només funciona fins que troba UNA instancia
+        frase = frase.replace("*", _assasi.nom + _assasi.alias)
+                     .replace("+", _mort1.nom + _mort1.alias) 
+                     .replace("+", _mort1.nom) // Si el nom està repetit a la frase, cal posar-lo
+                     .replace("=", _mort2.nom + _mort2.alias)
+                     .replace("=", _mort2.nom); // El mateix amb aquest
+        
+        content += frase;
+        
+        llistaVius[assasi].baixes += 2;
+        
+        var cp_mort1 = llistaVius[mort1];
+        var cp_mort2 = llistaVius[mort2];
+        
+        if (mort2 > mort1) {
+            mort2--;
+        }
+        
+        llistaMorts.push(cp_mort1);
+        llistaVius.splice(mort1, 1);
+        
+        
+        llistaMorts.push(cp_mort2);
+        llistaVius.splice(mort2, 1);
     }
-
-    content += "DOBLE KILL\n";
-
-    var mort1 = Math.floor( Math.random() * llistaVius.length );
-    var mort2 = Math.floor( Math.random() * llistaVius.length );
-    var assasi = Math.floor( Math.random() * llistaVius.length );
-
-
-    while (mort1 === mort2 || mort1 === assasi || mort2 === assasi) {
-        mort1 = Math.floor( Math.random() * llistaVius.length );
-        mort2 = Math.floor( Math.random() * llistaVius.length );
-        assasi = Math.floor( Math.random() * llistaVius.length );
-    }
-
-    var nomAssasi = llistaVius[assasi].nom;
-    var nom1 = llistaVius[mort1].nom;
-    var nom2 = llistaVius[mort2].nom;
-
-
-    // Frase personalitzada
-
-    var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
-    var frase = frases_doble_baixa[posicioFrase];
-
-    frase = frase.replace("*", nomAssasi);
-    frase = frase.replace("+", nom1);
-    frase = frase.replace("=", nom2);
-
-    content += frase; 
-
-    llistaVius[assasi].baixes += 2;
-    
-    var cp_mort1 = llistaVius[mort1];
-    var cp_mort2 = llistaVius[mort2];
-    
-    if (mort2 > mort1) {
-        mort2--;
-    }
-    
-    llistaMorts.push(cp_mort1);
-    llistaVius.splice(mort1, 1);
-
-
-    llistaMorts.push(cp_mort2);
-    llistaVius.splice(mort2, 1);
 }
 
 
@@ -335,31 +361,31 @@ function redencion() {
     // Quan s'executa la redencion, 2 persones que estaven mortes, reviuen
     if (llistaMorts.length < 2) {
         rondaEspecial();
+    } else {
+        content += "REDENCIÓ\n";
+
+        var resucitat1 = Math.floor( Math.random() * llistaMorts.length );
+        var resucitat2 = Math.floor( Math.random() * llistaMorts.length );
+
+        while (resucitat1 === resucitat2) {
+            resucitat2 = Math.floor( Math.random() * llistaMorts.length );
+        }
+
+        var res1 = llistaMorts[resucitat1];
+        var res2 = llistaMorts[resucitat2];
+
+        content += "Han resucitat 2 persones! " + res1.nom + res1.alias + " i " + res2.nom + res2.alias;
+
+        llistaVius.push(llistaMorts[resucitat1]);
+        llistaMorts.splice(resucitat1, 1);
+
+        if (resucitat2 > resucitat1) {
+            resucitat2--;
+        }
+
+        llistaVius.push(llistaMorts[resucitat2]);
+        llistaMorts.splice(resucitat2, 1);
     }
-
-    content += "REDENCIÓ\n";
-
-    var resucitat1 = Math.floor( Math.random() * llistaMorts.length );
-    var resucitat2 = Math.floor( Math.random() * llistaMorts.length );
-
-    while (resucitat1 === resucitat2) {
-        resucitat2 = Math.floor( Math.random() * llistaMorts.length );
-    }
-
-    var nom1 = llistaMorts[resucitat1].nom;
-    var nom2 = llistaMorts[resucitat2].nom;
-
-    content += "Han resucitat 2 persones! " + nom1 + " i " + nom2;
-
-    llistaVius.push(llistaMorts[resucitat1]);
-    llistaMorts.splice(resucitat1, 1);
-
-    if (resucitat2 > resucitat1) {
-        resucitat2--;
-    }
-
-    llistaVius.push(llistaMorts[resucitat2]);
-    llistaMorts.splice(resucitat2, 1);
 }
 
 
@@ -368,14 +394,15 @@ function resucitar() {
     // En el cas de que algun jugador hagi de resucitar s'esculleix aleatoriament i es mou d'una llista a l'altra
     if (llistaMorts.length < 1) {
         rondaEspecial();
+    } else {
+        content += "RESUCITAR\n";
+        var resucitatPosicio = Math.floor(Math.random() * llistaMorts.length);
+        var resucitat = llistaMorts[resucitatPosicio];
+        content += resucitat.nom + resucitat.alias + " ha reviscut!!!";
+        
+        llistaVius.push(resucitat);
+        llistaMorts.splice(resucitatPosicio, 1);
     }
-
-    var resucitatPosicio = Math.floor(Math.random() * llistaMorts.length);
-    var resucitat = llistaMorts[resucitatPosicio];
-    content += resucitat.nom + " " + resucitat.alias + "ha reviscut!!!";
-    
-    llistaVius.push(resucitat);
-    llistaMorts.splice(resucitatPosicio, 1);
 }
    
 
