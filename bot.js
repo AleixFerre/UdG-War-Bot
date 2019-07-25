@@ -54,7 +54,8 @@ var frases_mort = [
     "* ha mort a besitos a +",
     "* ha apuntat a + a la seva Death Note (sí, en té una perquè pot)",
     "* diu a + \nTe di la opción de reprogramar tu lenguaje o morir, elegiste no decir Arriba España, bueno no te preocupes en la muerte no existe el 155",
-    "* ha exterminat a + amb un ganivet"
+    "* ha exterminat a + amb un ganivet",
+    "* ha emboscat a + portant-lo al despatx d'en Rigau"
 ];
 
 var frases_suicidi = [
@@ -84,7 +85,8 @@ var frases_suicidi = [
     "* no suporta matar companys. S'ha sacrificat",
     "* s'ha matat llançant-se pel pont de l'Onyar",
     "* perquè t'has mort? Només t'he preguntat si entenies el final d'Evangelion",
-    "* no pot amb la seva vida i es tira des de la residència"
+    "* no pot amb la seva vida i es tira des de la residència",
+    "* s'en va a anar a dutxar sense recordar que estava a un holocaust"
 ];
 
 var frases_doble_baixa = [
@@ -112,7 +114,8 @@ var frases_doble_baixa = [
     "* ha estornudat i ha fet caure a + i = d'un penya-segat",
     "* ha assassinat a + y = porque + le habia robado su gran amor, =",
     "* es volia matar llançant-se des del pont de l'Onyar, però ha caigut a sobre de + i = i els ha matat",
-    "* s'apunta dues morts matant a + i a ="
+    "* s'apunta dues morts matant a + i a =",
+    '* ha partit en dos a + i a = amb una katana al crit de "Otaku muerto abono para mi huerto"'
 ];
 
 // Llista que mantindrà a tots els jugadors vius de la partida
@@ -144,7 +147,8 @@ var llistaVius = [
     { nom: "Gemma",                         alias: " ( @magicbllet )",              baixes: 0 },
     { nom: "MrNobody",                      alias: " ( @NoEnTincPeroEmFeiaIlu )",   baixes: 0 },
     { nom: "AllCatAreAragoneses",           alias: "",                              baixes: 0 },
-    { nom: "Joaquín Villena",               alias: " ( @EricJoaquin22 )",           baixes: 0 }
+    { nom: "Joaquín Villena",               alias: " ( @EricJoaquin22 )",           baixes: 0 },
+    { nom: "Andy",                          alias: " ( @SiestitaLover )",           baixes: 0 }
 ];
 
 var midaInici = llistaVius.length;
@@ -445,7 +449,7 @@ function montarFitxer() {
         if (err) throw err;        
         
         // Fem servir Processing per crear la imatge i la pengem a Twitter
-        
+
         tweetIt();
     }
 }
