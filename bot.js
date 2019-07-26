@@ -17,141 +17,31 @@ Hosted in AWS EC2
 // Requirements and imports
 
 var Twit = require('twit');
+
 var config = require('./config');
 var T = new Twit(config);
+
+var csv = require('csvtojson');
 
 var execute = require('child_process').exec;
 var fs = require('fs');
 
-console.log("Import done\n-----------------\n");
+console.log("Import done");
 
 // ----------------------------------------------------------------
 // Variables
 
-var frases_mort = [
-    "* ha guanyat a + l'1 pa 1 sin camiseta en el parque",
-    "* ha enverinat a + tirant-li mata rates en el cafè",
-    "* ha atropellat a + amb un John Deere",
-    "* ha enviat a + a recu de EDA",
-    "* ha matat a + \nLast whisper: He mort, però tornaré penis en mà i la meva venjança serà terrible",
-    "* ha matat a + sense motius, F",
-    "* ha enviat a + a l'Àrea 51",
-    "* ha ofegat a + amb els seus pectorals herculis",
-    "* s'ha despullat en mig de classe i + ha mort del fàstic",
-    "* ha dutxat a l'otaku +",
-    "* ha tirat a + per les escales de la P2",
-    "* ha exterminat a + amb una bomba d'hidrògen",
-    "* s'ha fumat a + i ara toca pey de celebració",
-    "* ha matat a + amb una cullera de plastic després de 10 hores...",
-    "* ha matat a + i aquest contesta: Cuando nos veamos, uno pa uno y te salto los empastes.",
-    "* ha penetrat amb un consolador a + fins la mort",
-    "* ha fet veure una marató de One Piece a +\nHa mort de deshidratació",
-    "* ha empalat a + amb un arma secreta",
-    "* ha enviat a + cap a la Lobby",
-    "* ha sacrificat a + als deus obscurs amb una bomba atomica",
-    "* s'ha follat a + sense condó i aquest ha pillat el sida i s'ha mort.",
-    "+ ha tret paper contra les tisores de * i és decapitat",
-    "* ha mort a besitos a +",
-    "* ha apuntat a + a la seva Death Note (sí, en té una perquè pot)",
-    "* diu a + \nTe di la opción de reprogramar tu lenguaje o morir, elegiste no decir Arriba España, bueno no te preocupes en la muerte no existe el 155",
-    "* ha exterminat a + amb un ganivet",
-    "* ha emboscat a + portant-lo al despatx d'en Rigau"
-];
+var frases_mort = [];
 
-var frases_suicidi = [
-    "* ha matat a *, perquè s'ha suicidat, ho pilles? jjajaj xD",
-    "* ha ensopegat per les escales del P2 i s'ha obert el cap",
-    "* s'ha suicidat al bar",
-    "* ha decidit deixar GDDV per Magisteri",
-    "* diu: El meu cap m'ha insultat, així que li he pegat un tret",
-    "* ha suspès la recu",
-    "* s'ha electrocutat amb un Arduino",
-    "* ha relliscat amb una bassa de Fairy i s'ha trencat el cap",
-    "* s'ha suicidat perque se n'ha adonat de que el seu profe d'MTP serà en Rigau",
-    "* no para de fer int",
-    "* s'ha vist al mirall.",
-    "* s'ha fotut un tret al cap a casa seva despres d'estar 3 hores buscant un error causat per escriure malament una variable;",
-    "* s'ha suicidat de sobredosi almenys va viure els ultims moments amb intensitat",
-    "* ja no podia més i s'ha tirat per un pont",
-    "* diu: Ojalá un Otaku en mi lugar, por un bien global.",
-    "* s'ha adonat que pensar que la terra és esfèrica és de 5 d'IQ i s'ha tirat d'un balcó",
-    "* no ha pogut processar el NULL de JavaScript, * no vol saber res més d'aquest món",
-    "* s'ha ofegat amb la seva pròpia saliva",
-    "* s'ha mort de desesperació esperant que s'obrís el 3DS MAX",
-    "* s'ha suicidat dient Jo soc Ironman \nNo serà recordat",
-    "* s'ha suïcidat al P2 perquè s'ha estresat amb Disseny Conceptual",
-    "* s'ha immolat contra un grup de vianants",
-    "* ha mort ennuegat amb la seva saliva",
-    "* no suporta matar companys. S'ha sacrificat",
-    "* s'ha matat llançant-se pel pont de l'Onyar",
-    "* perquè t'has mort? Només t'he preguntat si entenies el final d'Evangelion",
-    "* no pot amb la seva vida i es tira des de la residència",
-    "* s'en va a anar a dutxar sense recordar que estava a un holocaust"
-];
+var frases_suicidi = [];
 
-var frases_doble_baixa = [
-    "* ha deixat les practiques a + i =, cosa que els ha donat sida.",
-    "* s'ha marcat un dos por uno matant a + i a =",
-    "* ha destrossat l'ano de + i = mentre feien un threesome",
-    "* diu: Tinc polla per a tots, a + per davant i a = per darrera",
-    "* ha posat fi a la vida de + i =",
-    "* ha trobat un exploit al backend d'aquest bot, i ha esborrat a + i = de la llista de vius.",
-    "* ha sacrificat a un ritual satànic a + i a =",
-    "* s'ha fet una doble baixa matant a + amb una ma i a = amb l'altre",
-    "* ha mantingut el seu cul intacte matant a + i a =",
-    "* ha dit Efenelchat. + i = han decidit abandonar per no seguir amb en cringe.",
-    "* ha assessinat cruelment a + i a = mentre dormien",
-    "* esta mode fumat i amb la illuminacio mental ha aconseguit fer una doble baixa matant a + i a =",
-    "* ha fet explotar un banc on + i = hi estàven atracant",
-    "* ha matat a + i = dient ¡Toma cipotazo doble!",
-    "Intentant fent un centpeus humà, el científic * ha matat a + i a =",
-    "* no s'ha pogut controlar i ha matat a + i = per no poder haver entregat el projecte de jocs web",
-    "* ha matat a + i a = \nDany en àrea",
-    "* no en tenia prou amb + i ha matat també a =",
-    "* ha fet justicia matant a + i =",
-    "* ha abortat i ha acabat amb la vida dels seus futurs fills + i =",
-    "+ i =, han mort contra la forta i ferma espasa de *",
-    "* ha estornudat i ha fet caure a + i = d'un penya-segat",
-    "* ha assassinat a + y = porque + le habia robado su gran amor, =",
-    "* es volia matar llançant-se des del pont de l'Onyar, però ha caigut a sobre de + i = i els ha matat",
-    "* s'apunta dues morts matant a + i a =",
-    '* ha partit en dos a + i a = amb una katana al crit de "Otaku muerto abono para mi huerto"'
-];
+var frases_doble_baixa = [];
 
 // Llista que mantindrà a tots els jugadors vius de la partida
 
-var llistaVius = [
-    { nom: "Blascovitz",                    alias: " ( @en_sharp )",                baixes: 0 },
-    { nom: "Laura Qwerty",                  alias: " ( @LauraQwerty_ )",            baixes: 0 },
-    { nom: "Alex V.",                       alias: " ( @JainkoAteoa )",             baixes: 0 },
-    { nom: "Aureoloss - El Meme Master",    alias: " ( @ovonesix )",                baixes: 0 },
-    { nom: "EnormousBlackDildo",            alias: " ( @Rigoberto_III )",           baixes: 0 },
-    { nom: "Sandro Bortolotti",             alias: "",                              baixes: 0 },
-    { nom: "Quasar",                        alias: " ( @qsr711 )",                  baixes: 0 },
-    { nom: "Big oof",                       alias: " ( @ThunderUsed )",             baixes: 0 },
-    { nom: "Satán",                         alias: " ( @seitnist )",                baixes: 0 },
-    { nom: "ArrozArea51",                   alias: " ( @zRoz14 )",                  baixes: 0 },
-    { nom: "Català AltaDefinició",          alias: " ( @CatalaHD )",                baixes: 0 },
-    { nom: "Carla",                         alias: " ( @maya8carla )",              baixes: 0 },
-    { nom: "AlienFumeta",                   alias: "",                              baixes: 0 },
-    { nom: "Arnau Marquez",                 alias: "",                              baixes: 0 },
-    { nom: "Tomasz SzGu",                   alias: " ( @TomaszSzeliga )",           baixes: 0 },
-    { nom: "Joel AKA Chavalada",            alias: " ( @Jowi_99 )",                 baixes: 0 },
-    { nom: "TitoVizonte",                   alias: " ( @Tito_Vizonte )",            baixes: 0 },
-    { nom: "Pugdemon el pelucas",           alias: " ( @_rxbxn )",                  baixes: 0 },
-    { nom: "Santi",                         alias: " ( @SantiVG_99 )",              baixes: 0 },
-    { nom: "Jack el Destripador",           alias: " ( @JackArcanMiller )",         baixes: 0 },
-    { nom: "Anabel",                        alias: " ( @OnlyDreamAgain )",          baixes: 0 },
-    { nom: "Elamores Picotres <3",          alias: "",                              baixes: 0 },
-    { nom: "Rigau III - El Coix",           alias: "",                              baixes: 0 },
-    { nom: "Gemma",                         alias: " ( @magicbllet )",              baixes: 0 },
-    { nom: "MrNobody",                      alias: " ( @NoEnTincPeroEmFeiaIlu )",   baixes: 0 },
-    { nom: "AllCatAreAragoneses",           alias: "",                              baixes: 0 },
-    { nom: "Joaquín Villena",               alias: " ( @EricJoaquin22 )",           baixes: 0 },
-    { nom: "Andy",                          alias: " ( @SiestitaLover )",           baixes: 0 }
-];
+var llistaVius = [];
 
-var midaInici = llistaVius.length;
+var midaInici;
 
 // Llista que mantindrà a tots els jugadors morts de la partida
 var llistaMorts = [];
@@ -166,14 +56,49 @@ var frequencia_especials = 3; // Cada quants twits sortirà una ronda especial
 
 var nTwits = 0;
 
+var intervalID;
+
 // ----------------------------------------------------------------
 // Main Program
 
-// Fem el primer torn en quant el bot comenci
-ferTorn();
+setup_taules(llistaVius);
 
-// I cridem al setInterval perque cada x hores torni a fer un torn
-var intervalID = setInterval(ferTorn, 1000*60*60*24/frequencia_twits);
+function setup_taules() {
+    
+    var csv_vius = 'llista_vius.csv';
+    var csv_f_mort = 'frases_mort.csv';
+    var csv_f_suicidi = 'frases_suicidi.csv';
+    var csv_f_doble = 'frases_doble.csv';
+
+    csv().fromFile(csv_vius).then(function(a){
+        llistaVius = a;
+        csv().fromFile(csv_f_mort).then(function(a){
+            frases_mort = a;
+            csv().fromFile(csv_f_suicidi).then(function(a){
+                frases_suicidi = a;
+                csv().fromFile(csv_f_doble).then(function(a){
+                    frases_doble_baixa = a;
+                    
+                    // Import of all the tables done
+                    console.log("All tables charged\n-----------------\n");
+                    start_partida();
+                });
+            });
+        });
+    });
+}
+
+
+function start_partida() {
+
+    // Fem el primer torn en quant el bot comenci
+    ferTorn();
+
+    // I cridem al setInterval perque cada x hores torni a fer un torn
+    intervalID = setInterval(ferTorn, 1000*60*60*24/frequencia_twits);
+
+}
+
 
 
 // ----------------------------------------------------------------
@@ -258,7 +183,7 @@ function matar() {
     // Frase personalitzada
 
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
-    var frase = frases_mort[posicioFrase];
+    var frase = frases_mort[posicioFrase].info;
 
     frase = frase.replace("*", assasi.nom + assasi.alias).replace("+", mort.nom + mort.alias);
     
@@ -296,7 +221,7 @@ function suicidar() {
         // Frase personalitzada
         
         var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
-        var frase = frases_suicidi[posicioFrase];
+        var frase = frases_suicidi[posicioFrase].info;
         
         frase = frase.replace("*", suicidat.nom + suicidat.alias).replace("*", suicidat.nom);
 
@@ -334,7 +259,7 @@ function doble_kill() {
         // Frase personalitzada
         
         var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
-        var frase = frases_doble_baixa[posicioFrase];
+        var frase = frases_doble_baixa[posicioFrase].info;
         
         // El replace només funciona fins que troba UNA instancia
         frase = frase.replace("*", _assasi.nom + _assasi.alias)
