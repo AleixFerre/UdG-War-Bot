@@ -1,5 +1,5 @@
 {
-  "name": "npm_demo",
+  "name": "udg_war_bot",
   "version": "2.0.0",
   "description": "Developing the second version of the Twitter UdG Bot",
   "main": "bot.js",
