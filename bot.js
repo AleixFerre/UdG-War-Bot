@@ -65,10 +65,10 @@ setup_taules(llistaVius);
 
 function setup_taules() {
     
-    var csv_vius = 'llista_vius.csv';
-    var csv_f_mort = 'frases_mort.csv';
-    var csv_f_suicidi = 'frases_suicidi.csv';
-    var csv_f_doble = 'frases_doble.csv';
+    var csv_vius = 'info/llista_vius.csv';
+    var csv_f_mort = 'info/frases_mort.csv';
+    var csv_f_suicidi = 'info/frases_suicidi.csv';
+    var csv_f_doble = 'info/frases_doble.csv';
 
     csv().fromFile(csv_vius).then(function(a){
         llistaVius = a;
@@ -95,7 +95,7 @@ function start_partida() {
     ferTorn();
 
     // I cridem al setInterval perque cada x hores torni a fer un torn
-    intervalID = setInterval(ferTorn, 1000*60*60*24/frequencia_twits);
+    intervalID = setInterval(ferTorn, 100 /* 1000*60*60*24/frequencia_twits*/);
 
 }
 
@@ -375,7 +375,8 @@ function montarFitxer() {
         
         // Fem servir Processing per crear la imatge i la pengem a Twitter
 
-        tweetIt();
+        //tweetIt();
+        console.log(content+'\n');
         
     }
 }

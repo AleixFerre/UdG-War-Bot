@@ -15,9 +15,8 @@
     "UdG"
   ],
   "author": "Aleix Ferre Juan",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "convert-csv-to-json": "0.0.15",
     "csvtojson": "^2.0.10",
     "twit": "^2.2.11"
   }
