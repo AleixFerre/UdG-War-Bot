@@ -41,6 +41,9 @@ var frases_doble_baixa = [];
 
 var llistaVius = [];
 
+var teamA = [];
+var teamB = [];
+
 var midaInici;
 
 // Llista que mantindrà a tots els jugadors morts de la partida
@@ -52,7 +55,7 @@ var hashtag = "#UdGBattleRoyale2";
 var content = "";
 
 var frequencia_twits = 4; // Quantitat de Twits que s'han de pujar cada dia
-var frequencia_especials = 3; // Cada quants twits sortirà una ronda especial
+var frequencia_especials = 5; // Cada quants twits sortirà una ronda especial
 
 var nTwits = 0;
 
@@ -63,6 +66,12 @@ var intervalID;
 
 setup_taules(llistaVius);
 
+
+
+// ----------------------------------------------------------------
+// Functions
+
+
 function setup_taules() {
     
     var csv_vius = 'info/llista_vius.csv';
@@ -72,6 +81,7 @@ function setup_taules() {
 
     csv().fromFile(csv_vius).then(function(a){
         llistaVius = a;
+        midaInici = llistaVius.length;
         csv().fromFile(csv_f_mort).then(function(a){
             frases_mort = a;
             csv().fromFile(csv_f_suicidi).then(function(a){
@@ -90,7 +100,7 @@ function setup_taules() {
 
 
 function start_partida() {
-
+        
     // Fem el primer torn en quant el bot comenci
     ferTorn();
 
@@ -99,10 +109,6 @@ function start_partida() {
 
 }
 
-
-
-// ----------------------------------------------------------------
-// Functions
 
 function ferTorn() {
 
@@ -113,6 +119,7 @@ function ferTorn() {
     }
 
 }
+
 
 function rondaNormal() {
     
@@ -125,6 +132,7 @@ function rondaNormal() {
     montarFitxer();
     
 }
+
 
 function rondaEspecial() {
     content = "Ronda Especial: ";
@@ -185,7 +193,7 @@ function matar() {
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
     var frase = frases_mort[posicioFrase].info;
 
-    frase = frase.replace("*", assasi.nom + assasi.alias).replace("+", mort.nom + mort.alias);
+    frase = frase.replace(/([*])+/g, assasi.nom + assasi.alias).replace(/([+])+/g, mort.nom + mort.alias);
     
     content = frase;
     
@@ -223,7 +231,7 @@ function suicidar() {
         var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
         var frase = frases_suicidi[posicioFrase].info;
         
-        frase = frase.replace("*", suicidat.nom + suicidat.alias).replace("*", suicidat.nom);
+        frase = frase.replace(/([*])+/g, suicidat.nom + suicidat.alias);
 
         content += frase;
 
@@ -262,11 +270,9 @@ function doble_kill() {
         var frase = frases_doble_baixa[posicioFrase].info;
         
         // El replace només funciona fins que troba UNA instancia
-        frase = frase.replace("*", _assasi.nom + _assasi.alias)
-                     .replace("+", _mort1.nom + _mort1.alias) 
-                     .replace("+", _mort1.nom) // Si el nom està repetit a la frase, cal posar-lo
-                     .replace("=", _mort2.nom + _mort2.alias)
-                     .replace("=", _mort2.nom); // El mateix amb aquest
+        frase = frase.replace(/([*])+/g, _assasi.nom + _assasi.alias)
+                     .replace(/([+])+/g, _mort1.nom + _mort1.alias)
+                     .replace(/([=])+/g, _mort2.nom + _mort2.alias);
         
         content += frase;
         
@@ -349,20 +355,20 @@ function montarFitxer() {
 
     // Header
     
-    var fitxerContent = "Name,Viu,Baixes\n";
+    var fitxerContent = "Name,Viu,Baixes,Equip\n";
 
 
     // Llistat dels vius
 
     for(i = 0; i < llistaVius.length; i++) {
-        fitxerContent += llistaVius[i].nom + "," + 1 + "," + llistaVius[i].baixes + "\n";
+        fitxerContent += llistaVius[i].nom + "," + 1 + "," + llistaVius[i].baixes + "," + llistaVius[i].equip + "\n";
     }
 
 
     // Llistat dels morts
 
     for(i = 0; i < llistaMorts.length; i++) {
-        fitxerContent += llistaMorts[i].nom + "," + 0 + "," + llistaMorts[i].baixes + "\n";
+        fitxerContent += llistaMorts[i].nom + "," + 0 + "," + llistaMorts[i].baixes + "," + llistaMorts[i].equip + "\n";
     }
 
 

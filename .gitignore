@@ -1,4 +1,5 @@
 node_modules/
 bot-war.pem
 config.js
-image/data.csv
+config_main.js
+objects/~$objectTable.xlsx
