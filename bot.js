@@ -37,17 +37,20 @@ var frases_suicidi = [];
 
 var frases_doble_baixa = [];
 
-// Llista que mantindrà a tots els jugadors vius de la partida
+var frases_resucitar = [];
 
-var llistaVius = [];
+var frases_redencion = [];
+
+// Llistes que mantindran a tots els jugadors vius de la partida
+
+// var llistaVius = [];
+// var llistaMorts = [];
 
 var teamA = [];
 var teamB = [];
 
-var midaInici;
-
-// Llista que mantindrà a tots els jugadors morts de la partida
-var llistaMorts = [];
+var viusA;
+var viusB;
 
 // Contingut del Twit que s'ha de publicar
 // Aquest es va modificant dinàmicament al programa
@@ -55,7 +58,7 @@ var hashtag = "#UdGBattleRoyale2";
 var content = "";
 
 var frequencia_twits = 4; // Quantitat de Twits que s'han de pujar cada dia
-var frequencia_especials = 5; // Cada quants twits sortirà una ronda especial
+var frequencia_especials = 6; // Cada quants twits sortirà una ronda especial
 
 var nTwits = 0;
 
@@ -64,7 +67,7 @@ var intervalID;
 // ----------------------------------------------------------------
 // Main Program
 
-setup_taules(llistaVius);
+setup_taules();
 
 
 
@@ -74,24 +77,37 @@ setup_taules(llistaVius);
 
 function setup_taules() {
     
-    var csv_vius = 'info/llista_vius.csv';
+    var csv_team_A = 'info/llista_teamA.csv';
+    var csv_team_B = 'info/llista_teamB.csv';
     var csv_f_mort = 'info/frases_mort.csv';
     var csv_f_suicidi = 'info/frases_suicidi.csv';
     var csv_f_doble = 'info/frases_doble.csv';
+    var csv_f_resucitar = 'info/frases_resucitar.csv';
+    var csv_f_redencion = 'info/frases_redencion.csv';
 
-    csv().fromFile(csv_vius).then(function(a){
-        llistaVius = a;
-        midaInici = llistaVius.length;
-        csv().fromFile(csv_f_mort).then(function(a){
-            frases_mort = a;
-            csv().fromFile(csv_f_suicidi).then(function(a){
-                frases_suicidi = a;
-                csv().fromFile(csv_f_doble).then(function(a){
-                    frases_doble_baixa = a;
-                    
-                    // Import of all the tables done
-                    console.log("All tables charged\n-----------------\n");
-                    start_partida();
+    csv().fromFile(csv_team_A).then(function(a) {
+        teamA = a;
+        csv().fromFile(csv_team_B).then(function(a) {
+            teamB = a;
+            csv().fromFile(csv_f_mort).then(function(a) {
+                frases_mort = a;
+                csv().fromFile(csv_f_suicidi).then(function(a) {
+                    frases_suicidi = a;
+                    csv().fromFile(csv_f_resucitar).then(function(a) {
+                        frases_resucitar = a;
+                        csv().fromFile(csv_f_redencion).then(function(a) {
+                            frases_redencion = a;
+                            csv().fromFile(csv_f_doble).then(function(a) {
+                                frases_doble_baixa = a;
+                                viusA = teamA.length;
+                                viusB = teamB.length;
+
+                                // Import of all the tables done
+                                console.log("All tables charged\n-----------------\n");
+                                start_partida();
+                            });
+                        });
+                    });
                 });
             });
         });
@@ -112,11 +128,15 @@ function start_partida() {
 
 function ferTorn() {
 
+    /*
     if (nTwits%frequencia_especials === 0 && llistaVius.length > 5 && nTwits != 0) {
         rondaEspecial();
     } else {
         rondaNormal();
     }
+    */
+
+    rondaNormal();
 
 }
 
@@ -163,53 +183,70 @@ function matar() {
 
     // Quan un dels integrants ha de morir, s'esculleix un aleatòriament i es passa a la llista de morts 
 
-    var persona1 = Math.floor(Math.random() * llistaVius.length);
-    var persona2 = Math.floor(Math.random() * llistaVius.length);
-    
-    while (persona1 === persona2) {
-        persona1 = Math.floor(Math.random() * llistaVius.length);
-    }
-
-    var baixes1 = llistaVius[persona1].baixes;
-    var baixes2 = llistaVius[persona2].baixes;
-
+    var equip_atacant = Math.floor(Math.random()*100);
     var posicioAssasi;
     var posicioMort;
+    var assasi;
+    var mort;
+    var equip;
 
-    if (quiMata(baixes1, baixes2)) {
-        posicioAssasi = persona1;
-        posicioMort = persona2;
+    if (equip_atacant < 50) {
+        
+        // Ataca A
+        
+        equip = "A";
+
+        do {
+            posicioAssasi = Math.floor(Math.random() * teamA.length);
+            posicioMort = Math.floor(Math.random() * teamB.length);
+            
+            assasi = teamA[posicioAssasi];
+            mort = teamB[posicioMort];
+        } while ( assasi.viu == 0 || mort.viu == 0 );
+
+        teamA[posicioAssasi].baixes++;
+        teamB[posicioMort].viu = 0;
+        viusB--;
+
     } else {
-        posicioAssasi = persona2;
-        posicioMort = persona1;
-    }
+        
+        // Ataca B
+        
+        equip = "B";
 
-    var assasi = llistaVius[posicioAssasi];
-    var mort = llistaVius[posicioMort];
-    
+        do {
+            posicioAssasi = Math.floor(Math.random() * teamB.length);
+            posicioMort = Math.floor(Math.random() * teamA.length);
+
+            assasi = teamB[posicioAssasi];
+            mort = teamA[posicioMort];
+        } while ( assasi.viu == 0 || mort.viu == 0 );
+
+        teamB[posicioAssasi].baixes++;
+        teamA[posicioMort].viu = 0;
+        viusA--;
+
+    }
 
     // Frase personalitzada
 
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
     var frase = frases_mort[posicioFrase].info;
 
-    frase = frase.replace(/([*])+/g, assasi.nom + assasi.alias).replace(/([+])+/g, mort.nom + mort.alias);
+    frase = frase.replace(/([*])+/g, assasi.nom + assasi.alias)
+                 .replace(/([+])+/g, mort.nom + mort.alias);
     
     content = frase;
     
-    llistaVius[posicioAssasi].baixes++;
-    
-    
-    llistaMorts.push(mort);
-    llistaVius.splice(posicioMort,1);
-    
+        
     
     // Condicio de victoria
 
-    if ( llistaVius.length <= 1 ) {
+    if ( viusA <= 0 || viusB <= 0 ) {
         clearInterval(intervalID);
-        content += "\nVictòria Royale!!\n" + llistaVius[0].nom + " ha guanyat la Guerra!";
+        content += "\nVictòria Royale!!\nL'equip " + equip + " ha guanyat la Guerra!";
     }
+
 
 }
 
@@ -313,7 +350,15 @@ function redencion() {
         var res1 = llistaMorts[resucitat1];
         var res2 = llistaMorts[resucitat2];
 
-        content += "Han resucitat 2 persones! " + res1.nom + res1.alias + " i " + res2.nom + res2.alias;
+        // Frase personalitzada
+                
+        var posicioFrase = Math.floor(Math.random() * frases_redencion.length);
+        var frase = frases_redencion[posicioFrase].info;
+
+        frase = frase.replace(/([*])+/g, res1.nom + res1.alias)
+                     .replace(/([+])+/g, res2.nom + res2.alias);
+
+        content += frase;
 
         llistaVius.push(llistaMorts[resucitat1]);
         llistaMorts.splice(resucitat1, 1);
@@ -337,7 +382,15 @@ function resucitar() {
         content += "RESUCITAR\n";
         var resucitatPosicio = Math.floor(Math.random() * llistaMorts.length);
         var resucitat = llistaMorts[resucitatPosicio];
-        content += resucitat.nom + resucitat.alias + " ha reviscut!!!";
+
+        // Frase personalitzada
+                        
+        var posicioFrase = Math.floor(Math.random() * frases_resucitar.length);
+        var frase = frases_resucitar[posicioFrase].info;
+
+        frase = frase.replace(/([*])+/g, resucitat.nom + resucitat.alias);
+
+        content += frase;
         
         llistaVius.push(resucitat);
         llistaMorts.splice(resucitatPosicio, 1);
@@ -348,27 +401,28 @@ function resucitar() {
 function montarFitxer() {
 
     // Montem el fitxer .csv perque Processing el tingui llest per crear les imatges
-
-    if ( llistaVius.length > 1 ) {
-        content += "\n" + llistaVius.length + " vius, " + llistaMorts.length + " morts.";
+    
+    if ( viusA > 0 && viusB > 0 ) {
+        content += "\nTeam A: " + viusA + " vius - Team B: " + viusB + " vius";
     }
+
 
     // Header
     
-    var fitxerContent = "Name,Viu,Baixes,Equip\n";
+    var fitxerContent = "Name,Viu,Equip\n";
 
 
-    // Llistat dels vius
+    // Llistat del Team A
 
-    for(i = 0; i < llistaVius.length; i++) {
-        fitxerContent += llistaVius[i].nom + "," + 1 + "," + llistaVius[i].baixes + "," + llistaVius[i].equip + "\n";
+    for(i = 0; i < teamA.length; i++) {
+        fitxerContent += teamA[i].nom + "," + teamA[i].viu +  "," + "A" + "\n";
     }
 
 
-    // Llistat dels morts
+    // Llistat del Team B
 
-    for(i = 0; i < llistaMorts.length; i++) {
-        fitxerContent += llistaMorts[i].nom + "," + 0 + "," + llistaMorts[i].baixes + "," + llistaMorts[i].equip + "\n";
+    for(i = 0; i < teamB.length; i++) {
+        fitxerContent += teamB[i].nom + "," + teamB[i].viu + "," + "B" + "\n";
     }
 
 
