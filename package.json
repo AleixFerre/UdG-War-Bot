@@ -1,7 +1,7 @@
 {
   "name": "udg_war_bot",
-  "version": "2.0.0",
-  "description": "Developing the second version of the Twitter UdG Bot",
+  "version": "3.0.0",
+  "description": "Third version of the Twitter UdG Bot\nAdded TeamFight Battles",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
@@ -10,9 +10,10 @@
   "keywords": [
     "Bot",
     "Twitter",
-    "v2",
     "Battle Royale",
-    "UdG"
+    "UdG",
+    "TeamFight Battles",
+    "v3"
   ],
   "author": "Aleix Ferre Juan",
   "license": "MIT",
