@@ -116,7 +116,7 @@ function start_partida() {
     ferTorn();
 
     // I cridem al setInterval perque cada x hores torni a fer un torn
-    intervalID = setInterval(ferTorn, 100 /* 1000*60*60*24/frequencia_twits*/);
+    intervalID = setInterval(ferTorn, 10000 /* 1000*60*60*24/frequencia_twits*/);
 
 }
 
@@ -168,7 +168,7 @@ function rondaEspecial() {
     }
 
     montarFitxer();
-    
+
 }
 
 
@@ -478,14 +478,14 @@ function montarFitxer() {
     // Llistat del Team A
 
     for(i = 0; i < teamA.length; i++) {
-        fitxerContent += teamA[i].nom + "," + teamA[i].viu +  "," + "A" + "\n";
+        fitxerContent += teamA[i].nom + "," + teamA[i].viu +  "," + "0" + "\n";
     }
 
 
     // Llistat del Team B
 
     for(i = 0; i < teamB.length; i++) {
-        fitxerContent += teamB[i].nom + "," + teamB[i].viu + "," + "B" + "\n";
+        fitxerContent += teamB[i].nom + "," + teamB[i].viu + "," + "1" + "\n";
     }
 
 
@@ -498,9 +498,7 @@ function montarFitxer() {
         
         // Fem servir Processing per crear la imatge i la pengem a Twitter
 
-        //tweetIt();
-        console.log(content+'\n');
-        nTwits++;
+        tweetIt();
         
     }
 }
@@ -513,10 +511,10 @@ function tweetIt() {
     // i ens és més fàcil.
     
     console.log("Starting processing ALIVE");
-    var cmd = './image/alive/image_alive';
-    execute(cmd, processing_alive);
+    var cmd = './image/image_teamA';
+    execute(cmd, processing_teamA);
     
-    function processing_alive(error, stdout, err) {
+    function processing_teamA(error, stdout, err) {
         
         // Quan ja s'ha creat la imatge ALIVE i no hi ha hagut cap error, començem a processar la segona
 
@@ -524,40 +522,40 @@ function tweetIt() {
             console.log(error);
         }
 
-        console.log("Processing ALIVE done!");
+        console.log("Processing Team A done!");
 
         
 
         // Creem una comanda per executar directament l'script però ara DEATH
 
-        console.log("Starting processing DEATH");
-        var cmd = './image/death/image_death';
-        execute(cmd, processing_death);
+        console.log("Starting processing Team B");
+        var cmd = './image/image_teamB';
+        execute(cmd, processing_teamB);
 
-        function processing_death(error, data, err) {
+        function processing_teamB(error, data, err) {
             if (error !== null) {
                 console.log(error);
             }
     
-            console.log("Processing DEATH done!\nReading the img contents...");
+            console.log("Processing Team B done!\nReading the img contents...");
 
             // Llegim el contingut de les dues imatges, ja processades, per pujar-les finalment
 
-            var alive_filename = './image/alive/output_alive.png';
+            var alive_filename = './image/image_teamA/output_teamA.jpg';
             var alive_params = {
                 encoding: 'base64'
             };
             var alive_b64 = fs.readFileSync(alive_filename, alive_params);
 
-            var death_filename = './image/death/output_death.png';
+            var death_filename = './image/death/output_teamB.jpg';
             var death_params = {
                 encoding: 'base64'
             };
             var death_b64 = fs.readFileSync(death_filename, death_params);
             
 
-            // Pujem la imatge ALIVE
-            console.log("Uploading ALIVE");
+            // Pujem la imatge Team A
+            console.log("Uploading Team A");
             T.post('media/upload', { media_data: alive_b64 }, uploaded_alive);
 
             
@@ -565,8 +563,8 @@ function tweetIt() {
                 
                 var id_alive = data.media_id_string;
                 
-                // Pujem la imatge DEATH
-                console.log("Uploading DEATH");
+                // Pujem la imatge Team B
+                console.log("Uploading Team B");
                 T.post('media/upload', { media_data: death_b64 }, uploaded_death);
                 
                 function uploaded_death(err,data,error) {
