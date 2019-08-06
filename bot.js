@@ -58,7 +58,7 @@ var hashtag = "#UdGBattleRoyale2";
 var content = "";
 
 var frequencia_twits = 4; // Quantitat de Twits que s'han de pujar cada dia
-var frequencia_especials = 6; // Cada quants twits sortirà una ronda especial
+var frequencia_especials = 5; // Cada quants twits sortirà una ronda especial
 
 var nTwits = 0;
 
@@ -86,32 +86,27 @@ function setup_taules() {
     var csv_f_redencion = 'info/frases_redencion.csv';
 
     csv().fromFile(csv_team_A).then(function(a) {
-        teamA = a;
-        csv().fromFile(csv_team_B).then(function(a) {
-            teamB = a;
-            csv().fromFile(csv_f_mort).then(function(a) {
-                frases_mort = a;
-                csv().fromFile(csv_f_suicidi).then(function(a) {
-                    frases_suicidi = a;
-                    csv().fromFile(csv_f_resucitar).then(function(a) {
-                        frases_resucitar = a;
-                        csv().fromFile(csv_f_redencion).then(function(a) {
-                            frases_redencion = a;
-                            csv().fromFile(csv_f_doble).then(function(a) {
-                                frases_doble_baixa = a;
-                                viusA = teamA.length;
-                                viusB = teamB.length;
+    teamA = a;
+    csv().fromFile(csv_team_B).then(function(a) {
+    teamB = a;
+    csv().fromFile(csv_f_mort).then(function(a) {
+    frases_mort = a;
+    csv().fromFile(csv_f_suicidi).then(function(a) {
+    frases_suicidi = a;
+    csv().fromFile(csv_f_resucitar).then(function(a) {
+    frases_resucitar = a;
+    csv().fromFile(csv_f_redencion).then(function(a) {
+    frases_redencion = a;
+    csv().fromFile(csv_f_doble).then(function(a) {
+    frases_doble_baixa = a;
+    viusA = teamA.length;
+    viusB = teamB.length;
 
-                                // Import of all the tables done
-                                console.log("All tables charged\n-----------------\n");
-                                start_partida();
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
+    // Import of all the tables done
+    console.log("All tables charged\n-----------------\n");
+    start_partida();
+
+    });});});});});});});
 }
 
 
@@ -127,16 +122,12 @@ function start_partida() {
 
 
 function ferTorn() {
-
-    /*
-    if (nTwits%frequencia_especials === 0 && llistaVius.length > 5 && nTwits != 0) {
+  
+    if (nTwits%frequencia_especials === 0 && viusA > 5 && viusB > 5 && nTwits != 0) {
         rondaEspecial();
     } else {
         rondaNormal();
     }
-    */
-
-    rondaNormal();
 
 }
 
@@ -172,10 +163,12 @@ function rondaEspecial() {
         redencion();
 
     } else {
+        // O ressucitar una persona
         resucitar();
     }
-    
+
     montarFitxer();
+    
 }
 
 
@@ -202,7 +195,7 @@ function matar() {
             
             assasi = teamA[posicioAssasi];
             mort = teamB[posicioMort];
-        } while ( assasi.viu == 0 || mort.viu == 0 );
+        } while ( assasi.viu === 0 || mort.viu === 0 );
 
         teamA[posicioAssasi].baixes++;
         teamB[posicioMort].viu = 0;
@@ -220,7 +213,7 @@ function matar() {
 
             assasi = teamB[posicioAssasi];
             mort = teamA[posicioMort];
-        } while ( assasi.viu == 0 || mort.viu == 0 );
+        } while ( assasi.viu === 0 || mort.viu === 0 );
 
         teamB[posicioAssasi].baixes++;
         teamA[posicioMort].viu = 0;
@@ -233,8 +226,10 @@ function matar() {
     var posicioFrase = Math.floor(Math.random() * frases_mort.length);
     var frase = frases_mort[posicioFrase].info;
 
-    frase = frase.replace(/([*])+/g, assasi.nom + assasi.alias)
-                 .replace(/([+])+/g, mort.nom + mort.alias);
+    frase = frase.replace(/([*])/, assasi.nom + assasi.alias)
+                 .replace(/([*])+/g, assasi.nom)
+                 .replace(/([+])/, mort.nom + mort.alias)
+                 .replace(/([+])+/g, mort.nom);
     
     content = frase;
     
@@ -253,148 +248,216 @@ function matar() {
 
 function suicidar() {
 
-    if (llistaVius.length < 2) {
-        rondaEspecial();
+    content += "SUICIDI\n";
+
+    var suicidat;
+    var suicidat_pos;
+
+    if (Math.random() * 100 < 50) {
+        // Team A
+
+        do {
+            suicidat_pos = Math.floor(Math.random() * teamA.length);
+            suicidat = teamA[suicidat_pos];
+        } while ( suicidat.viu === 0 );
+
+        teamA[suicidat_pos].viu = 0;
+        viusA--;
+
     } else {
-        content += "SUICIDI\n";
+        // Team B
+        do {
+            suicidat_pos = Math.floor(Math.random() * teamB.length);
+            suicidat = teamB[suicidat_pos];
+        } while ( suicidat.viu === 0 );
 
-        var suicidat_pos = Math.floor(Math.random() * llistaVius.length);
-
-        suicidat = llistaVius[suicidat_pos];
-
-        
-        // Frase personalitzada
-        
-        var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
-        var frase = frases_suicidi[posicioFrase].info;
-        
-        frase = frase.replace(/([*])+/g, suicidat.nom + suicidat.alias);
-
-        content += frase;
-
-        llistaMorts.push(suicidat);
-        llistaVius.splice(suicidat_pos, 1);
+        teamB[suicidat_pos].viu = 0;
+        viusB--;
     }
+    
+    // Frase personalitzada
+    
+    var posicioFrase = Math.floor(Math.random() * frases_suicidi.length);
+    var frase = frases_suicidi[posicioFrase].info;
+    
+    frase = frase.replace(/([*])/, suicidat.nom + suicidat.alias)
+                 .replace(/([*])+/g, suicidat.nom);
+
+    content += frase;
+
 }
 
 
 function doble_kill() {
-    // Quan s'executa la redencion, 2 persones que estaven mortes, reviuen
-    if (llistaMorts.length < 2) {
-        rondaEspecial();
-    } else {        
-        content += "DOBLE KILL\n";
 
-        var mort1 = Math.floor( Math.random() * llistaVius.length );
-        var mort2 = Math.floor( Math.random() * llistaVius.length );
-        var assasi = Math.floor( Math.random() * llistaVius.length );
+    content += "DOBLE KILL de l'Equip ";
+
+    var pos_mort1, pos_mort2, pos_assasi;
+    var assasi, mort1, mort2;
+
+    if (Math.random()*100 < 50) {
+        // Team A mata a 2
+        content += "A\n";
+
+        do {
+
+            pos_assasi = Math.floor( Math.random() * teamA.length );
+            pos_mort1 = Math.floor( Math.random() * teamB.length );
+            pos_mort2 = Math.floor( Math.random() * teamB.length );
+    
+            assasi = teamA[pos_assasi];
+            mort1 = teamB[pos_mort1];
+            mort2 = teamB[pos_mort2];
+        
+            
+        } while (pos_mort1 === pos_mort2 || mort1.viu === 0 || mort2.viu === 0 || assasi.viu === 0);
 
 
-        while (mort1 === mort2 || mort1 === assasi || mort2 === assasi) {
-            mort1 = Math.floor( Math.random() * llistaVius.length );
-            mort2 = Math.floor( Math.random() * llistaVius.length );
-            assasi = Math.floor( Math.random() * llistaVius.length );
-        }
+        teamA[pos_assasi].baixes += 2;
+        teamB[pos_mort1].viu = 0;
+        teamB[pos_mort2].viu = 0;
+        viusB-=2;    
 
-        var _assasi = llistaVius[assasi];
-        var _mort1 = llistaVius[mort1];
-        var _mort2 = llistaVius[mort2];
 
+    } else {
+        // Team B mata a 2
+        content += "B\n";
+
+        do {
+
+            pos_assasi = Math.floor( Math.random() * teamB.length );
+            pos_mort2 = Math.floor( Math.random() * teamA.length );
+            pos_mort1 = Math.floor( Math.random() * teamA.length );
+    
+            assasi = teamB[pos_assasi];
+            mort1 = teamA[pos_mort1];
+            mort2 = teamA[pos_mort2];
         
-        // Frase personalitzada
-        
-        var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
-        var frase = frases_doble_baixa[posicioFrase].info;
-        
-        // El replace només funciona fins que troba UNA instancia
-        frase = frase.replace(/([*])+/g, _assasi.nom + _assasi.alias)
-                     .replace(/([+])+/g, _mort1.nom + _mort1.alias)
-                     .replace(/([=])+/g, _mort2.nom + _mort2.alias);
-        
-        content += frase;
-        
-        llistaVius[assasi].baixes += 2;
-        
-        var cp_mort1 = llistaVius[mort1];
-        var cp_mort2 = llistaVius[mort2];
-        
-        if (mort2 > mort1) {
-            mort2--;
-        }
-        
-        llistaMorts.push(cp_mort1);
-        llistaVius.splice(mort1, 1);
-        
-        
-        llistaMorts.push(cp_mort2);
-        llistaVius.splice(mort2, 1);
+            
+        } while (pos_mort1 === pos_mort2 || mort1.viu === 0 || mort2.viu === 0 || assasi.viu === 0);
+
+
+        teamB[pos_assasi].baixes += 2;
+        teamA[pos_mort1].viu = 0;
+        teamA[pos_mort2].viu = 0;
+        viusA-=2;
+
     }
+    
+    // Frase personalitzada
+    
+    var posicioFrase = Math.floor(Math.random() * frases_doble_baixa.length);
+    var frase = frases_doble_baixa[posicioFrase].info;
+    
+    // El replace només funciona fins que troba UNA instancia
+    frase = frase.replace(/([*])/,   assasi.nom + assasi.alias)
+                 .replace(/([*])+/g, assasi.nom)
+                 .replace(/([+])/,   mort1.nom + mort1.alias)
+                 .replace(/([+])+/g, mort1.nom)
+                 .replace(/([=])/,   mort2.nom + mort2.alias)
+                 .replace(/([=])+/g, mort2.nom);
+    
+    content += frase;
+    
 }
 
 
 function redencion() {
 
     // Quan s'executa la redencion, 2 persones que estaven mortes, reviuen
-    if (llistaMorts.length < 2) {
-        rondaEspecial();
+
+    content += "REDENCIÓ\n";
+
+    var resucitat1, res1, resucitat2, res2;
+
+    if (Math.random() * 100 < 50) {
+        // Team A
+        do {
+
+            resucitat1 = Math.floor(Math.random() * teamA.length);
+            res1 = teamA[resucitat1];
+
+            resucitat2 = Math.floor(Math.random() * teamA.length);
+            res2 = teamA[resucitat2];
+
+        } while ( res1.viu === 1 || res2.viu === 1 || resucitat1 === resucitat2 );
+
+        teamA[resucitat1].viu = 1;
+        teamA[resucitat2].viu = 1;
+        viusA += 2;
+
     } else {
-        content += "REDENCIÓ\n";
+        // Team B
+        do {
 
-        var resucitat1 = Math.floor( Math.random() * llistaMorts.length );
-        var resucitat2 = Math.floor( Math.random() * llistaMorts.length );
+            resucitat1 = Math.floor(Math.random() * teamB.length);
+            res1 = teamB[resucitat1];
 
-        while (resucitat1 === resucitat2) {
-            resucitat2 = Math.floor( Math.random() * llistaMorts.length );
-        }
+            resucitat2 = Math.floor(Math.random() * teamB.length);
+            res2 = teamB[resucitat2];
 
-        var res1 = llistaMorts[resucitat1];
-        var res2 = llistaMorts[resucitat2];
+        } while ( res1.viu === 1 || res2.viu === 1 || resucitat1 === resucitat2 );
 
-        // Frase personalitzada
-                
-        var posicioFrase = Math.floor(Math.random() * frases_redencion.length);
-        var frase = frases_redencion[posicioFrase].info;
+        teamB[resucitat1].viu = 1;
+        teamB[resucitat2].viu = 1;
+        viusB += 2;
 
-        frase = frase.replace(/([*])+/g, res1.nom + res1.alias)
-                     .replace(/([+])+/g, res2.nom + res2.alias);
-
-        content += frase;
-
-        llistaVius.push(llistaMorts[resucitat1]);
-        llistaMorts.splice(resucitat1, 1);
-
-        if (resucitat2 > resucitat1) {
-            resucitat2--;
-        }
-
-        llistaVius.push(llistaMorts[resucitat2]);
-        llistaMorts.splice(resucitat2, 1);
     }
+
+    // Frase personalitzada
+            
+    var posicioFrase = Math.floor(Math.random() * frases_redencion.length);
+    var frase = frases_redencion[posicioFrase].info;
+
+    frase = frase.replace(/([*])/, res1.nom + res1.alias)
+                 .replace(/([*])+/g, res1.nom)
+                 .replace(/([+])/, res2.nom + res2.alias)
+                 .replace(/([+])+/g, res2.nom);
+
+    content += frase;
+
 }
 
 
 function resucitar() {
 
     // En el cas de que algun jugador hagi de resucitar s'esculleix aleatoriament i es mou d'una llista a l'altra
-    if (llistaMorts.length < 1) {
-        rondaEspecial();
-    } else {
-        content += "RESUCITAR\n";
-        var resucitatPosicio = Math.floor(Math.random() * llistaMorts.length);
-        var resucitat = llistaMorts[resucitatPosicio];
+    content += "RESUCITAR\n";
 
-        // Frase personalitzada
-                        
-        var posicioFrase = Math.floor(Math.random() * frases_resucitar.length);
-        var frase = frases_resucitar[posicioFrase].info;
+    var resucitatPosicio;
+    var resucitat;
 
-        frase = frase.replace(/([*])+/g, resucitat.nom + resucitat.alias);
+    if (Math.random() * 100 < 50) {
+        // Team A
+        do {
+            resucitatPosicio = Math.floor(Math.random() * teamA.length);
+            resucitat = teamA[resucitatPosicio];
+        } while ( resucitat.viu == 1 );
 
-        content += frase;
+        teamA[resucitatPosicio].viu = 1;
+        viusA++;
         
-        llistaVius.push(resucitat);
-        llistaMorts.splice(resucitatPosicio, 1);
+    } else {
+        // Team B
+        do {
+            resucitatPosicio = Math.floor(Math.random() * teamB.length);
+            resucitat = teamB[resucitatPosicio];
+        } while ( resucitat.viu == 1 );
+
+        teamB[resucitatPosicio].viu = 1;
+        viusB++;
+
     }
+    
+
+    // Frase personalitzada
+                    
+    var posicioFrase = Math.floor(Math.random() * frases_resucitar.length);
+    var frase = frases_resucitar[posicioFrase].info;
+
+    frase = frase.replace(/([*])+/g, resucitat.nom + resucitat.alias);
+
+    content += frase;
 }
    
 
@@ -437,6 +500,7 @@ function montarFitxer() {
 
         //tweetIt();
         console.log(content+'\n');
+        nTwits++;
         
     }
 }
