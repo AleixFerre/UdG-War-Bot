@@ -1,17 +1,13 @@
-# UdG Twitter Bot v2
+# UdG Twitter Bot v3
 
 UdG Twitter Bot is a Bot connected to Twitter that twits 4 times every day making a Battle Royale Game with all the GDDV UdG classmates.
 
 
-## New Features!
+## New v3 Features!
 
-  - Now people who have more kills are more likely to win!!
-  - There are also special rounds in which some dead member will revive or someone will kill two people at a time.
-  - The Bot will also upload two photos automatically generated each round that will list the live and the dead.
-  - Background image improved a lot.
-  - When anyone dies, he will show a custom phrase that you will choose!
-  - The Bot will show the day of the War in which the Twit is publishing.
-
+  - New custom death, suicide, redemption and resurrection phrases.
+  - New image composition.
+  - New Team Oriented Fight.
 
 ## Prerequisites
 
