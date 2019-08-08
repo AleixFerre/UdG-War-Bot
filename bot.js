@@ -472,20 +472,20 @@ function montarFitxer() {
 
     // Header
     
-    var fitxerContent = "Name,Viu,Equip\n";
+    var fitxerContent = "Name,Viu,Equip,Baixes\n";
 
 
     // Llistat del Team A
 
     for(i = 0; i < teamA.length; i++) {
-        fitxerContent += teamA[i].nom + "," + teamA[i].viu +  "," + "0" + "\n";
+        fitxerContent += teamA[i].nom + "," + teamA[i].viu +  "," + "0," + teamA[i].baixes + "\n";
     }
 
 
     // Llistat del Team B
 
     for(i = 0; i < teamB.length; i++) {
-        fitxerContent += teamB[i].nom + "," + teamB[i].viu + "," + "1" + "\n";
+        fitxerContent += teamB[i].nom + "," + teamB[i].viu + "," + "1," + teamB[i].baixes + "\n";
     }
 
 
@@ -498,7 +498,7 @@ function montarFitxer() {
         
         // Fem servir Processing per crear la imatge i la pengem a Twitter
 
-        tweetIt();
+        //tweetIt();
         
     }
 }
@@ -511,7 +511,7 @@ function tweetIt() {
     // i ens és més fàcil.
     
     console.log("Starting processing ALIVE");
-    var cmd = './image/image_teamA';
+    var cmd = './image/image_teamA/image_teamA';
     execute(cmd, processing_teamA);
     
     function processing_teamA(error, stdout, err) {
@@ -529,7 +529,7 @@ function tweetIt() {
         // Creem una comanda per executar directament l'script però ara DEATH
 
         console.log("Starting processing Team B");
-        var cmd = './image/image_teamB';
+        var cmd = './image/image_teamB/image_teamB';
         execute(cmd, processing_teamB);
 
         function processing_teamB(error, data, err) {

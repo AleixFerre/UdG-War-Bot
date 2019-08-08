@@ -53,13 +53,14 @@ void setup() {
     String name = row.getString("Name");
     int viu = row.getInt("Viu");
     int equip = row.getInt("Equip");
+    int baixes = row.getInt("Baixes");
     
     if (equip == 1) {
       
       if (j%2==0) {
-        casa(10, 30+j*115, viu, name);
+        casa(10, 30+j*115, viu, name, baixes);
       } else {
-        casa(210, 30+j*115, viu, name);
+        casa(210, 30+j*115, viu, name, baixes);
       }
       
       if ( viu == 1 ) {
@@ -84,18 +85,18 @@ void setup() {
 
 
 
-void casa(int x, int y, int viu, String name) {
+void casa(int x, int y, int viu, String name, int baixes) {
   
   int mida_casa = 100;
   
   if (viu == 0) {
     // Destruida
     image(destroyed, x, y-mida_casa, mida_casa, mida_casa);
-    outlineText(name, x+mida_casa/2, y+25, false, false);
+    outlineText(name + " (" + baixes + ")", x+mida_casa/2, y+25, false, false);
   } else {
     // Normal
     image(house, x, y-mida_casa, mida_casa, mida_casa);
-    outlineText(name, x+mida_casa/2, y+25, false, true);
+    outlineText(name + " (" + baixes + ")", x+mida_casa/2, y+25, false, true);
   }
   
   
